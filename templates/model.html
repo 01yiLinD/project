@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模型介绍 | 脊柱健康智能平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a73e8;
+            --secondary: #0d47a1;
+            --accent: #00bcd4;
+            --light: #f8f9fa;
+            --dark: #1e2a38;
+            --gray: #5f738c;
+            --success: #4caf50;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Raleway', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 粒子背景效果 */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        /* 导航栏样式 */
+       #main-nav {
+    position: fixed; /* 固定在页面顶部 */
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(1.5); /* 居中 + 放大1.5倍 */
+    z-index: 999;
+    border: none;
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    box-shadow: 5px 5px 10px #00000033;
+    padding: 12px 20px;
+    max-width: 1000px;
+    width: 90%;
+    transition: transform 0.3s ease;
+}
+
+#main-nav li {
+    position: relative;
+    z-index: 2;
+}
+
+#main-nav li a {
+    padding: 10px 30px;
+    font: 500 16px '优设标题黑', sans-serif;
+    color: #fef6da;
+    display: block;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#main-nav li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff9c4;
+}
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mobile-nav li {
+            display: block;
+            width: 100%;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .mobile-nav li:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-nav li a {
+            text-decoration: none;
+            color: #e0f7fa;
+            padding: 16px 30px;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            display: block;
+            font-size: 17px;
+            letter-spacing: 0.5px;
+        }
+
+        .mobile-nav li a i {
+            margin-right: 15px;
+            width: 25px;
+            text-align: center;
+            color: var(--accent);
+        }
+
+        .mobile-nav li a:hover {
+            background: rgba(79, 195, 247, 0.1);
+            color: #fff;
+            padding-left: 35px;
+        }
+
+        /* 主内容区 */
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 140px 20px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 标题区域 */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(30, 42, 58, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: url('/static/img/modelbj.jpg') no-repeat center center / cover;
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #e0f7fa, #80deea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            color: #bbdefb;
+            line-height: 1.7;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 内容区域 */
+        .content-section {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 0.8s forwards;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            color: #80deea;
+        }
+
+        .content-text {
+            line-height: 1.8;
+            font-size: 17px;
+            color: #bbdefb;
+            margin-bottom: 20px;
+        }
+
+        .content-text strong {
+            color: white;
+            font-weight: 500;
+        }
+
+        .feature-list {
+            padding-left: 25px;
+            margin-bottom: 30px;
+        }
+
+        .feature-list li {
+            margin-bottom: 15px;
+            position: relative;
+            color: #bbdefb;
+            line-height: 1.7;
+        }
+
+        .feature-list li::before {
+            content: '•';
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: -18px;
+            font-size: 20px;
+        }
+
+        .innovation-box {
+            background: rgba(0, 188, 212, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .innovation-title {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .innovation-title i {
+            color: var(--accent);
+        }
+
+        .model-image {
+            display: block;
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 10px;
+            margin: 30px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .model-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 188, 212, 0.4);
+        }
+
+        .advantages-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .advantage-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .advantage-card:hover {
+            background: rgba(0, 188, 212, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .advantage-icon {
+            font-size: 40px;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .advantage-title {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .advantage-text {
+            color: #bbdefb;
+            line-height: 1.6;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.4rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .content-section {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                top: 15px;
+                width: 96%;
+            }
+
+            .logo-text {
+                font-size: 18px;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .container {
+                padding: 120px 20px 60px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .mobile-nav.active {
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 16px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .content-text {
+                font-size: 16px;
+            }
+        }
+
+        /* 动画延迟 */
+        .content-section:nth-child(1) { animation-delay: 0.1s; }
+        .content-section:nth-child(2) { animation-delay: 0.2s; }
+        .content-section:nth-child(3) { animation-delay: 0.3s; }
+        .content-section:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+
+    <!-- 导航栏 -->
+    <ul id="main-nav">
+        <li><a href="{{ url_for('index') }}">首页</a></li>
+        <li><a href="{{ url_for('diseases') }}">脊柱疾病介绍</a></li>
+        <li><a href="{{ url_for('model') }}">模型介绍</a></li>
+        <li><a href="{{ url_for('diagnosis') }}">辅助诊断</a></li>
+        <li><a href="{{ url_for('exercise') }}">健康训练</a></li>
+        <li><a href="{{ url_for('contact') }}">联系我们</a></li>
+    </ul>
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <!-- 标题区域 -->
+        <div class="hero-section">
+            <h1 class="hero-title">脊柱定位分割</h1>
+            <p class="hero-subtitle">基于Transformer的两阶段脊柱影像多任务学习系统</p>
+        </div>
+
+        <!-- 内容区域 -->
+        <div class="content-section">
+            <h2 class="section-title">模型介绍</h2>
+
+            <h3 class="section-subtitle">为什么要设计脊柱定位分割模型？</h3>
+            <p class="content-text">脊柱疾病是全球范围内极为常见的健康问题，影响高达80%的人口。随着人口老龄化加剧，脊柱疾病的发病率和医疗需求预计将持续增长，使其预防、诊断和治疗成为亟待解决的公共卫生问题。在这一背景下，脊椎标记和分割技术作为脊柱疾病诊疗的重要环节，其精度和效率直接影响医生的诊断准确性和治疗规划。</p>
+
+            <p class="content-text">传统方法在处理脊柱CT图像时面临三大核心挑战：</p>
+            <ul class="feature-list">
+                <li><strong>任意视场问题</strong>：CT图像的扫描范围和方向高度可变，导致模型需频繁处理不连续的脊柱片段或混合解剖部位。</li>
+                <li><strong>边缘检测不精准</strong>：传统矩形框检测器对脊柱的方向变化敏感，难以适应脊椎形态的多样性。</li>
+                <li><strong>后续处理需求高</strong>：传统方法依赖手工特征提取和多阶段处理流程，导致模型对复杂视场变化的适应性较差，且需要额外的后处理步骤来修正结果。</li>
+            </ul>
+
+            <p class="content-text">为应对上述挑战，本项目提出了一种基于Transformer架构的两阶段多任务学习系统，旨在实现脊柱CT图像的全自动脊椎标记和分割，显著提升模型的鲁棒性、适应性和精度。</p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">模型架构与创新点</h2>
+            <p class="content-text">本项目提出的模型分为两个阶段，分别针对脊椎标记和分割任务，通过多任务学习框架实现协同优化。</p>
+
+            <h3 class="section-subtitle">第一阶段：基于轻量级Transformer的脊椎标记</h3>
+            <p class="content-text"><strong>核心功能</strong>：全自动脊椎标记，通过判断脊椎存在性和预测中心点坐标，为分割任务提供初始约束。</p>
+
+            <p class="content-text"><strong>技术实现</strong>：</p>
+            <ul class="feature-list">
+                <li><strong>轻量级3D Transformer架构</strong>：通过自注意力机制实现全局上下文建模，捕捉图像中所有体素之间的关系，从而在不同视场下准确理解脊柱的整体结构和局部细节。</li>
+                <li><strong>跳跃连接</strong>：促进上下文信息和梯度的传播，使模型能够在多尺度上整合特征，有效应对脊椎数量和形态的变化。</li>
+                <li><strong>可学习的位置嵌入</strong>：为模型提供动态的空间位置信息，帮助其在不同视场中精确定位脊椎，克服传统方法对固定规则的依赖。</li>
+            </ul>
+
+            <div class="innovation-box">
+                <div class="innovation-title">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>创新点</span>
+                </div>
+                <ul class="feature-list">
+                    <li><strong>全局上下文建模</strong>：通过自注意力机制，模型能够动态关注脊柱的整体结构和局部细节，显著提升了对复杂应用场景的适应性。</li>
+                    <li><strong>轻量化设计</strong>：在保持高效特征提取能力的同时，降低了计算复杂度，适用于大规模脊柱CT图像的处理。</li>
+                </ul>
+            </div>
+
+            <img src="/static/img/1jiagoy.png" alt="Spine-Transformers架构图" class="model-image">
+
+            <h3 class="section-subtitle">第二阶段：基于多任务编码器-解码器的脊椎分割</h3>
+            <p class="content-text"><strong>核心功能</strong>：利用标记结果避免脊椎混淆，并通过中心点热力图细化和掩码预测协同提升鲁棒性。</p>
+
+            <p class="content-text"><strong>技术实现</strong>：</p>
+            <ul class="feature-list">
+                <li><strong>多任务编码器-解码器网络</strong>：共享编码路径，实现脊柱检测、分割及其他相关任务的一体化处理。</li>
+                <li><strong>InSphere检测器</strong>：基于内切球的检测器，利用球体天然的旋转不变性，在处理不同方向的脊椎时提供稳定且准确的检测结果。</li>
+                <li><strong>端到端优化</strong>：通过综合多种损失函数（如分类损失、回归损失、边缘损失和GIoU损失），模型在训练过程中同时优化多个方面的性能，避免了传统方法中复杂的中间步骤。</li>
+            </ul>
+
+            <div class="innovation-box">
+                <div class="innovation-title">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>创新点</span>
+                </div>
+                <ul class="feature-list">
+                    <li><strong>旋转不变性</strong>：InSphere检测器克服了传统矩形框检测器的方向敏感性，能够灵活适应脊椎的复杂形态和边界。</li>
+                    <li><strong>任务协同优化</strong>：通过共享特征和任务间协同，实现了脊柱检测、分割及其他相关任务的一体化处理，显著提高了效率与精度。</li>
+                </ul>
+            </div>
+
+            <img src="/static/img/2jiagou1.png" alt="多任务编码器-解码器网络架构图" class="model-image">
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">模型优势与实际应用</h2>
+
+            <div class="advantages-container">
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="advantage-title">高效性</h3>
+                    <p class="advantage-text">通过轻量级Transformer架构和端到端优化，模型在保持高精度的同时显著降低了计算复杂度，适用于大规模脊柱CT图像的处理。</p>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="advantage-title">鲁棒性</h3>
+                    <p class="advantage-text">引入全局上下文建模和内接球检测器，显著提升了模型在复杂场景下的适应性和鲁棒性。</p>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-laptop-medical"></i>
+                    </div>
+                    <h3 class="advantage-title">实用性</h3>
+                    <p class="advantage-text">设计了基于Web的可视化平台，通过友好的交互界面展示脊椎标记和分割结果，极大降低了技术门槛，助力医学研究与临床实践。</p>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">模型的未来展望</h3>
+            <p class="content-text">本项目的研究成果为脊柱疾病的诊疗提供了高效、精准的工具，特别是在应对人口老龄化和脊柱疾病高发的背景下，具有重要的公共卫生意义。未来，我们将进一步优化模型的性能，探索其在更多医学影像分析任务中的应用潜力，推动医疗资源的优化与公平分配。</p>
+        </div>
+    </div>
+
+    <script>
+        // 粒子背景初始化
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: "#80deea" },
+                shape: { type: "circle", stroke: { width: 0, color: "#000000" } },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#4db6ac",
+                    opacity: 0.3,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 1 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // 菜单交互
+        const hamburger = document.querySelector('.hamburger');
+        const mobileNav = document.querySelector('.mobile-nav');
+
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            mobileNav.classList.toggle('active');
+            hamburger.innerHTML = mobileNav.classList.contains('active') ?
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('nav') && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+
+        // 滚动视差效果
+        const background = document.querySelector(".hero-section");
+        document.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            background.style.backgroundPosition = `calc(50% + ${scrollY * 0.2}px) calc(50% + ${scrollY * 0.2}px)`;
+        });
+
+        // 动画延迟
+        document.querySelectorAll('.content-section').forEach((section, index) => {
+            section.style.animationDelay = `${0.1 * index + 0.1}s`;
+        });
+    </script>
+</body>
+</html>

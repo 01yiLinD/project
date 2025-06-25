@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脊柱定位分割系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a73e8;
+            --secondary: #0d47a1;
+            --accent: #00bcd4;
+            --light: #f8f9fa;
+            --dark: #1e2a38;
+            --gray: #5f738c;
+            --success: #4caf50;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Raleway', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: var(--light);
+            min-height: 110vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 粒子背景效果 */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* 主内容区 */
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 标题区域 */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(30, 42, 58, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            width: 100%;
+            transition: all 0.4s ease;
+        }
+
+        .hero-section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #e0f7fa, #80deea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 1s forwards 0.3s;
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            color: #bbdefb;
+            line-height: 1.7;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 1s forwards 0.5s;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: transparent;
+            color: var(--accent);
+            border: 3px solid var(--accent);
+            border-radius: 50px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 1s forwards 0.7s;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 188, 212, 0.3), rgba(0, 188, 212, 0.1));
+            transition: width 0.5s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover {
+            background: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 0 30px rgba(0, 188, 212, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .cta-button:hover::before {
+            width: 100%;
+        }
+
+        .spine-icon {
+            font-size: 100px;
+            color: rgba(0, 188, 212, 0.5);
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 1s forwards 0.1s;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            max-width: 900px;
+            width: 100%;
+            margin-top: 50px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 1s forwards 0.9s;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-card:hover {
+            background: rgba(0, 188, 212, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 45px;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .feature-text {
+            color: #bbdefb;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* 动画 */
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            .hero-section {
+                padding: 40px 25px;
+            }
+            .hero-title {
+                font-size: 2.8rem;
+                letter-spacing: 5px;
+            }
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+            .cta-button {
+                font-size: 1.2rem;
+                padding: 15px 40px;
+            }
+            .spine-icon {
+                font-size: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.2rem;
+                letter-spacing: 3px;
+            }
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            .cta-button {
+                font-size: 1rem;
+                padding: 12px 30px;
+            }
+            .spine-icon {
+                font-size: 60px;
+            }
+        }
+
+        footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            padding: 0 20px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <div class="spine-icon">
+            <i class="fas fa-bone"></i>
+        </div>
+
+        <div class="hero-section">
+            <h1 class="hero-title">脊柱定位分割系统</h1>
+            <p class="hero-subtitle">基于AI的精准脊柱影像分析与诊断平台</p>
+            <a href="/index" class="cta-button">点击体验</a>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="feature-title">智能定位</h3>
+                <p class="feature-text">深度学习算法精准定位脊柱位置</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-diagnoses"></i>
+                </div>
+                <h3 class="feature-title">精确分割</h3>
+                <p class="feature-text">多任务学习实现脊柱结构精确分割</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="feature-title">高效分析</h3>
+                <p class="feature-text">快速生成三维可视化分析报告</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3 class="feature-title">健康管理</h3>
+                <p class="feature-text">个性化脊柱健康训练方案定制</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 脊柱定位分割系统 | 湘潭大学人工智能研究团队
+    </footer>
+
+    <script>
+        // 粒子背景初始化
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#80deea" },
+                shape: { type: "circle", stroke: { width: 0, color: "#000000" } },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#4db6ac",
+                    opacity: 0.3,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 1 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // 平滑滚动效果
+        document.querySelector('.cta-button').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // 添加点击反馈
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 200);
+
+            // 页面过渡效果
+            document.body.style.opacity = '0.8';
+            document.body.style.transition = 'opacity 0.5s ease';
+
+            setTimeout(() => {
+                window.location.href = this.href;
+            }, 500);
+        });
+    </script>
+</body>
+</html>

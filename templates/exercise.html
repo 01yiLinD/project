@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康训练 - 脊柱健康智能平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a73e8;
+            --secondary: #0d47a1;
+            --accent: #00bcd4;
+            --light: #f8f9fa;
+            --dark: #1e2a38;
+            --gray: #5f738c;
+            --success: #4caf50;
+            --gold: #FFC000;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Raleway', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 粒子背景效果 */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        /* 导航栏样式 */
+       #main-nav {
+    position: fixed; /* 固定在页面顶部 */
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(1.5); /* 居中 + 放大1.5倍 */
+    z-index: 999;
+    border: none;
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    box-shadow: 5px 5px 10px #00000033;
+    padding: 12px 20px;
+    max-width: 1000px;
+    width: 90%;
+    transition: transform 0.3s ease;
+}
+
+#main-nav li {
+    position: relative;
+    z-index: 2;
+}
+
+#main-nav li a {
+    padding: 10px 30px;
+    font: 500 16px '优设标题黑', sans-serif;
+    color: #fef6da;
+    display: block;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#main-nav li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff9c4;
+}
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 主内容区 */
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 140px 20px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 标题区域 */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(30, 42, 58, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1591348131719-8c1a7b4767e7?q=80&w=2070') no-repeat center center / cover;
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #e0f7fa, #80deea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #bbdefb;
+            line-height: 1.7;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 搜索区域 */
+        .search-section {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-box {
+            flex-grow: 1;
+            padding: 18px 25px;
+            border: none;
+            font-size: 1.1rem;
+            background: rgba(30, 42, 58, 0.6);
+            color: #fff;
+            outline: none;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-button {
+            background: var(--gold);
+            border: none;
+            padding: 0 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-button:hover {
+            background: #e4ad46;
+        }
+
+        .search-button svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* 视频卡片区域 */
+        .content-section {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .video-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 188, 212, 0.3);
+        }
+
+        .video-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .video-card_details {
+            padding: 20px;
+        }
+
+        .video-card_details h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .video-card_details p {
+            color: #bbdefb;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .video-card_details a {
+            display: inline-block;
+            background: var(--gold);
+            color: #1e2a38;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .video-card_details a:hover {
+            background: #e4ad46;
+            box-shadow: 0 0 15px rgba(242, 200, 102, 0.5);
+        }
+
+        /* 打卡区域 */
+        .clock-section {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .clock-in-btn {
+            background: linear-gradient(135deg, var(--gold), #e4ad46);
+            color: #1e2a38;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .clock-in-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(242, 200, 102, 0.4);
+        }
+
+        /* 弹窗 */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-content {
+            background: rgba(30, 42, 58, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .popup-content img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .popup-content h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .popup-content p {
+            color: #bbdefb;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .popup-content button {
+            background: var(--gold);
+            color: #1e2a38;
+            border: none;
+            padding: 12px 35px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .popup-content button:hover {
+            background: #e4ad46;
+            box-shadow: 0 0 15px rgba(242, 200, 102, 0.5);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.4rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .video-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            #main-nav {
+                top: 15px;
+                width: 96%;
+                padding: 10px 15px;
+            }
+
+            #main-nav li a {
+                padding: 8px 20px;
+                font-size: 14px;
+            }
+
+            .container {
+                padding: 120px 20px 60px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .content-section {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .search-box {
+                padding: 15px 20px;
+                font-size: 1rem;
+            }
+
+            .video-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+
+    <!-- 导航栏 -->
+    <ul id="main-nav">
+        <li><a href="{{ url_for('index') }}">首页</a></li>
+        <li><a href="{{ url_for('diseases') }}">脊柱疾病介绍</a></li>
+        <li><a href="{{ url_for('model') }}">模型介绍</a></li>
+        <li><a href="{{ url_for('diagnosis') }}">辅助诊断</a></li>
+        <li><a href="{{ url_for('exercise') }}">健康训练</a></li>
+        <li><a href="{{ url_for('contact') }}">联系我们</a></li>
+    </ul>
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <!-- 标题区域 -->
+        <div class="hero-section">
+            <h1 class="hero-title">健康训练指导</h1>
+            <p class="hero-subtitle">专业设计的脊柱康复训练方案，帮助您缓解疼痛、增强核心肌群、改善体态</p>
+        </div>
+
+        <!-- 搜索区域 -->
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" class="search-box" id="searchInput"
+                    placeholder="请输入疾病名称（如：腰椎间盘突出）...">
+                <button class="search-button" id="searchButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="#1e2a38" d="M23.707 22.293l-5.969-5.969a10.016 10.016 0 1 0-1.414 1.414l5.969 5.969a1 1 0 0 0 1.414-1.414zM10 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 视频区域 -->
+        <div class="content-section">
+            <h2 class="section-title">精选训练课程</h2>
+            <div class="video-container" id="videoContainer">
+                <!-- 视频卡片将通过JS动态生成 -->
+            </div>
+        </div>
+
+        <!-- 打卡区域 -->
+        <div class="clock-section">
+            <h2 class="section-title">每日训练打卡</h2>
+            <p class="content-text">坚持每日训练是恢复健康的关键，记录您的训练历程</p>
+            <button class="clock-in-btn" id="clockInBtn">完成今日训练打卡</button>
+        </div>
+    </div>
+
+    <!-- 弹窗 -->
+    <div class="popup" id="clockInPopup">
+        <div class="popup-content">
+            <img src="/static/img/like.jpg" alt="打卡成功">
+            <h2>你真棒！</h2>
+            <p>你已经完成了今天的训练任务，继续保持哦！坚持训练是恢复健康的关键。</p>
+            <button id="closePopup">关闭</button>
+        </div>
+    </div>
+
+    <script>
+        // 粒子背景初始化
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: "#80deea" },
+                shape: { type: "circle", stroke: { width: 0, color: "#000000" } },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#4db6ac",
+                    opacity: 0.3,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 1 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // 导航栏交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('#main-nav li a');
+            const slide = document.querySelector('.slide2');
+
+            // 设置当前活动链接
+            navLinks[4].classList.add('active');
+
+            // 初始化滑块位置
+            const activeLink = document.querySelector('#main-nav li a.active');
+            const position = activeLink.parentElement.getBoundingClientRect();
+            const navPosition = document.querySelector('#main-nav').getBoundingClientRect();
+            const left = position.left - navPosition.left;
+            const width = position.width;
+
+            slide.style.opacity = '1';
+            slide.style.left = `${left}px`;
+            slide.style.width = `${width}px`;
+
+            // 鼠标悬停效果
+            navLinks.forEach(link => {
+                link.addEventListener('mouseover', function() {
+                    const position = this.parentElement.getBoundingClientRect();
+                    const navPosition = document.querySelector('#main-nav').getBoundingClientRect();
+                    const left = position.left - navPosition.left;
+                    const width = position.width;
+
+                    slide.style.opacity = '1';
+                    slide.style.left = `${left}px`;
+                    slide.style.width = `${width}px`;
+                });
+
+                link.addEventListener('mouseout', function() {
+                    const activeLink = document.querySelector('#main-nav li a.active');
+                    const position = activeLink.parentElement.getBoundingClientRect();
+                    const navPosition = document.querySelector('#main-nav').getBoundingClientRect();
+                    const left = position.left - navPosition.left;
+                    const width = position.width;
+
+                    slide.style.opacity = '1';
+                    slide.style.left = `${left}px`;
+                    slide.style.width = `${width}px`;
+                });
+            });
+        });
+
+        // 视频数据
+        const videos = [
+            {
+                id: 1,
+                title: "颈椎病康复训练",
+                description: "缓解颈部疼痛，改善颈椎灵活性，适合长期伏案工作者",
+                image: "/static/img/1p.png",
+                disease: "颈椎病",
+                url: "https://www.bilibili.com/video/BV1U94y1C72s/"
+            },
+            {
+                id: 2,
+                title: "腰椎间盘突出康复训练",
+                description: "缓解腰部疼痛，增强腰背肌力量，改善腰椎稳定性",
+                image: "/static/img/2p.jpg",
+                disease: "腰椎间盘突出",
+                url: "https://www.bilibili.com/video/BV1zk2WYsEra/"
+            },
+            {
+                id: 3,
+                title: "脊柱侧弯康复训练",
+                description: "纠正脊柱侧弯，改善体态，增强核心肌群力量",
+                image: "/static/img/3p.png",
+                disease: "脊柱侧弯",
+                url: "https://www.bilibili.com/video/BV1Fx4y1E7B7/"
+            },
+            {
+                id: 4,
+                title: "强直性脊柱炎康复训练",
+                description: "缓解脊柱僵硬，增强关节灵活性，改善日常活动能力",
+                image: "/static/img/4p.png",
+                disease: "强直性脊柱炎",
+                url: "https://www.sohu.com/a/771417485_121086213"
+            },
+            {
+                id: 5,
+                title: "办公室脊柱保健操",
+                description: "适合上班族的简单运动，缓解久坐带来的脊柱压力",
+                image: "/static/img/5p.png",
+                disease: "脊柱保健",
+                url: "#"
+            },
+            {
+                id: 6,
+                title: "产后脊柱恢复训练",
+                description: "帮助产后妈妈恢复脊柱健康，缓解腰背疼痛，保持健康",
+                image: "/static/img/6p.jpg",
+                disease: "产后恢复",
+                url: "#"
+            }
+        ];
+
+        // 初始化页面，加载所有视频
+        window.onload = function() {
+            displayVideos(videos);
+
+            // 打卡按钮事件
+            document.getElementById('clockInBtn').addEventListener('click', showPopup);
+            document.getElementById('closePopup').addEventListener('click', hidePopup);
+
+            // 搜索按钮事件
+            document.getElementById('searchButton').addEventListener('click', function() {
+                const searchTerm = document.getElementById('searchInput').value.trim();
+                if(searchTerm) {
+                    searchVideos(searchTerm);
+                }
+            });
+
+            // 回车键搜索
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if(e.key === 'Enter') {
+                    const searchTerm = this.value.trim();
+                    if(searchTerm) {
+                        searchVideos(searchTerm);
+                    }
+                }
+            });
+        };
+
+        // 显示视频
+        function displayVideos(videoList) {
+            const container = document.getElementById('videoContainer');
+            container.innerHTML = '';
+
+            videoList.forEach(video => {
+                const card = document.createElement('div');
+                card.className = 'video-card';
+                card.innerHTML = `
+                    <img src="${video.image}" alt="${video.title}">
+                    <div class="video-card_details">
+                        <h3>${video.title}</h3>
+                        <p>${video.description}</p>
+                        <a href="${video.url}" target="_blank">观看视频</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // 搜索视频
+        function searchVideos(query) {
+            const results = videos.filter(video => {
+                return video.disease.includes(query) ||
+                       video.title.includes(query) ||
+                       video.description.includes(query);
+            });
+
+            displayVideos(results);
+
+            // 如果没有结果，显示提示
+            if(results.length === 0) {
+                const container = document.getElementById('videoContainer');
+                container.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search fa-3x"></i>
+                        <h3>没有找到相关训练课程</h3>
+                        <p>请尝试其他关键词，如"颈椎"、"腰椎"等</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 显示弹窗
+        function showPopup() {
+            document.getElementById('clockInPopup').style.display = 'flex';
+        }
+
+        // 隐藏弹窗
+        function hidePopup() {
+            document.getElementById('clockInPopup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

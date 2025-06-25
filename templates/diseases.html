@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脊柱疾病介绍 | 脊柱健康智能平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a73e8;
+            --secondary: #0d47a1;
+            --accent: #00bcd4;
+            --light: #f8f9fa;
+            --dark: #1e2a38;
+            --gray: #5f738c;
+            --success: #4caf50;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Raleway', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 粒子背景效果 */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+                /* 导航栏样式 */
+       #main-nav {
+    position: fixed; /* 固定在页面顶部 */
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(1.5); /* 居中 + 放大1.5倍 */
+    z-index: 999;
+    border: none;
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    box-shadow: 5px 5px 10px #00000033;
+    padding: 12px 20px;
+    max-width: 1000px;
+    width: 90%;
+    transition: transform 0.3s ease;
+}
+
+#main-nav li {
+    position: relative;
+    z-index: 2;
+}
+
+#main-nav li a {
+    padding: 10px 30px;
+    font: 500 16px '优设标题黑', sans-serif;
+    color: #fef6da;
+    display: block;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#main-nav li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff9c4;
+}
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 120px 20px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            max-width: 800px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #e0f7fa, #80deea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: #bbdefb;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        /* 搜索框 */
+        .search-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 16px 25px 16px 55px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            font-size: 18px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-weight: 500;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-box:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(0, 188, 212, 0.4);
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .search-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--accent);
+            font-size: 22px;
+        }
+
+        .highlight {
+            animation: highlight 1.5s ease;
+        }
+
+        @keyframes highlight {
+            0% { background-color: rgba(255,235,59,0.3); }
+            100% { background-color: transparent; }
+        }
+
+        /* 3D图集 */
+        .gallery-section {
+            width: 100%;
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent), #0288d1);
+            border-radius: 2px;
+        }
+
+        .shell {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            max-width: 900px;
+            margin: 0 auto;
+            perspective: 1000px;
+            transform-origin: center;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-origin: center;
+            transform-style: preserve-3d;
+            transform: translateZ(-30vw) rotateY(0);
+            animation: carousel 20s infinite cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        .item {
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            max-width: 500px;
+            max-height: 400px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            filter: saturate(1.1) contrast(1.1);
+            transition: all 0.5s ease;
+        }
+
+        .item:hover {
+            transform: scale(1.05) !important;
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.5);
+            z-index: 10;
+        }
+
+        .item:nth-child(1) {
+            background-image: url("/static/img/lunb1.png");
+            transform: rotateY(0) translateZ(40vw);
+        }
+
+        .item:nth-child(2) {
+            background-image: url("/static/img/lunb2.jpg");
+            transform: rotateY(72deg) translateZ(40vw);
+        }
+
+        .item:nth-child(3) {
+            background-image: url("/static/img/lunb3.jpg");
+            transform: rotateY(144deg) translateZ(40vw);
+        }
+
+        .item:nth-child(4) {
+            background-image: url("/static/img/lunb4.jpg");
+            transform: rotateY(216deg) translateZ(40vw);
+        }
+
+        .item:nth-child(5) {
+            background-image: url("/static/img/lunb5.jpg");
+            transform: rotateY(288deg) translateZ(40vw);
+        }
+
+        @keyframes carousel {
+            0%, 100% {
+                transform: translateZ(-40vw) rotateY(0);
+            }
+            20% {
+                transform: translateZ(-40vw) rotateY(-72deg);
+            }
+            40% {
+                transform: translateZ(-40vw) rotateY(-144deg);
+            }
+            60% {
+                transform: translateZ(-40vw) rotateY(-216deg);
+            }
+            80% {
+                transform: translateZ(-40vw) rotateY(-288deg);
+            }
+        }
+
+        /* 疾病卡片 */
+        .diseases-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .disease-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 0.8s forwards;
+            animation-delay: calc(0.1s * var(--delay));
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .disease-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .disease-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .disease-card h2 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .disease-card h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .preview-text {
+            color: #bbdefb;
+            line-height: 1.7;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            color: var(--accent);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .read-more i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .disease-card:hover .read-more {
+            color: white;
+        }
+
+        .disease-card:hover .read-more i {
+            transform: translateX(5px);
+        }
+
+        /* 弹窗样式 - 已优化 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+        }
+
+        .expanded {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85vw;
+            height: 85vh;
+            max-width: 1200px;
+            z-index: 2001;
+            background: rgba(30, 42, 58, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+        }
+
+        .expanded-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .expanded-img-container {
+            width: 100%;
+            height: 40%;
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .expanded-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .expanded-text {
+            width: 100%;
+            height: 60%;
+            overflow-y: auto;
+            padding: 30px;
+            color: #e0f7fa;
+        }
+
+        .expanded-text::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .expanded-text::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        .expanded-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .expanded-text h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .disease-detail {
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        .disease-detail h3 {
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            color: white;
+        }
+
+        .disease-detail ul, .disease-detail ol {
+            padding-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .disease-detail li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .disease-detail li::before {
+            content: '•';
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: -18px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #bbdefb;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .close-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 1200px) {
+            .expanded {
+                width: 90vw;
+                height: 90vh;
+            }
+
+            .expanded-img-container {
+                height: 35%;
+            }
+
+            .expanded-text {
+                height: 65%;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .diseases-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .expanded-text {
+                padding: 25px;
+            }
+
+            .expanded-text h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #main-nav {
+                transform: translateX(-50%) scale(1);
+                padding: 10px;
+                width: 95%;
+            }
+
+            #main-nav li a {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            .container {
+                padding: 100px 15px 60px;
+            }
+
+            .shell {
+                height: 350px;
+            }
+
+            .diseases-container {
+                grid-template-columns: 1fr;
+            }
+
+            .expanded {
+                width: 95vw;
+                height: 95vh;
+            }
+
+            .expanded-img-container {
+                min-height: 250px;
+            }
+
+            .expanded-text h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .search-box {
+                padding: 14px 20px 14px 50px;
+                font-size: 16px;
+            }
+
+            .shell {
+                height: 280px;
+            }
+
+            .expanded-img-container {
+                min-height: 200px;
+            }
+
+            .expanded-text {
+                padding: 20px;
+            }
+
+            .expanded-text h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+
+    <!-- 导航栏 -->
+    <ul id="main-nav">
+        <li><a href="{{ url_for('index') }}">首页</a></li>
+        <li><a href="{{ url_for('diseases') }}">脊柱疾病介绍</a></li>
+        <li><a href="{{ url_for('model') }}">模型介绍</a></li>
+        <li><a href="{{ url_for('diagnosis') }}">辅助诊断</a></li>
+        <li><a href="{{ url_for('exercise') }}">健康训练</a></li>
+        <li><a href="{{ url_for('contact') }}">联系我们</a></li>
+    </ul>
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <div class="page-header">
+            <h1>脊柱疾病专业知识库</h1>
+            <p>探索常见脊柱疾病的详细信息，包括病因、症状、诊断方法和治疗方案</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" id="searchInput"
+                   placeholder="输入疾病名称搜索 (如: 腰椎间盘突出)">
+            <button class="search-button" id="searchButton">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+        <div class="gallery-section">
+            <h2 class="section-title">常见脊柱疾病图示</h2>
+            <div class="shell">
+                <div class="content">
+                    <div class="item"></div>
+                    <div class="item"></div>
+                    <div class="item"></div>
+                    <div class="item"></div>
+                    <div class="item"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="diseases-container">
+            <div class="disease-card" style="--delay:1">
+                <img src="/static/img/Zzjp.jpg" alt="椎间盘疾病" class="disease-img">
+                <div class="card-body">
+                    <h2>腰椎间盘突出</h2>
+                    <p class="preview-text">最常见的脊柱疾病之一，多发于20-50岁人群，主要由于椎间盘退变、纤维环破裂导致髓核突出压迫神经根。</p>
+                    <a class="read-more">查看详情 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="disease-card" style="--delay:2">
+                <img src="/static/img/Zjzb.png" alt="颈椎病" class="disease-img">
+                <div class="card-body">
+                    <h2>颈椎病</h2>
+                    <p class="preview-text">长期保持不良姿势导致的颈部疾病，主要表现为颈部疼痛、僵硬、上肢放射性疼痛和麻木。</p>
+                    <a class="read-more">查看详情 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="disease-card" style="--delay:3">
+                <img src="/static/img/Zjzcw.jpg" alt="脊柱侧弯" class="disease-img">
+                <div class="card-body">
+                    <h2>脊柱侧弯</h2>
+                    <p class="preview-text">脊柱的异常侧向弯曲，常伴有旋转，多发于青少年，可能与遗传、姿势等因素有关。</p>
+                    <a class="read-more">查看详情 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="disease-card" style="--delay:4">
+                <img src="/static/img/Zqzx.png" alt="强直性脊柱炎" class="disease-img">
+                <div class="card-body">
+                    <h2>强直性脊柱炎</h2>
+                    <p class="preview-text">一种慢性炎症性疾病，主要影响脊柱和骶髂关节，常导致晨起僵硬和疼痛，与遗传因素密切相关。</p>
+                    <a class="read-more">查看详情 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="disease-card" style="--delay:5">
+                <img src="/static/img/Zzjgxz.png" alt="腰椎管狭窄症" class="disease-img">
+                <div class="card-body">
+                    <h2>腰椎管狭窄症</h2>
+                    <p class="preview-text">腰椎椎管狭窄导致神经受压，常见于中老年人，典型表现为间歇性跛行。</p>
+                    <a class="read-more">查看详情 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="disease-card" style="--delay:6">
+                <img src="/static/img/Zxzjp.png" alt="胸椎间盘突出" class="disease-img">
+                <div class="card-body">
+                    <h2>胸椎间盘突出</h2>
+                    <p class="preview-text">胸椎间盘纤维环破裂，髓核突出压迫神经，可引起胸腹部放射性疼痛。</p>
+                    <a class="read-more">查看详情 <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 遮罩层和弹窗 -->
+    <div class="overlay"></div>
+    <div class="expanded"></div>
+
+    <script>
+        // 粒子背景初始化
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: "#80deea" },
+                shape: { type: "circle", stroke: { width: 0, color: "#000000" } },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#4db6ac",
+                    opacity: 0.3,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 1 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        const cards = document.querySelectorAll('.disease-card');
+        const overlay = document.querySelector('.overlay');
+        const expandedDiv = document.querySelector('.expanded');
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                const diseaseName = card.querySelector('h2').textContent;
+                const imgSrc = card.querySelector('img').src;
+
+                expandedDiv.innerHTML = `
+                    <span class="close-btn">×</span>
+                    <div class="expanded-content">
+                        <div class="expanded-img-container">
+                            <img src="${imgSrc}" class="expanded-img" alt="${diseaseName}">
+                        </div>
+                        <div class="expanded-text">
+                            <h2>${diseaseName}</h2>
+                            <div class="disease-detail">
+                                ${generateDetailContent(diseaseName)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                expandedDiv.style.display = 'flex';
+                overlay.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+
+                // 关闭功能
+                const closeFn = () => {
+                    expandedDiv.style.display = 'none';
+                    overlay.style.display = 'none';
+                    document.body.style.overflow = '';
+                };
+
+                expandedDiv.querySelector('.close-btn').addEventListener('click', closeFn);
+                overlay.addEventListener('click', closeFn);
+            });
+        });
+
+        /* 生成详细内容的函数 */
+        function generateDetailContent(diseaseName) {
+            if (diseaseName === '腰椎间盘突出') {
+                return `
+                    <h3>疾病概述</h3>
+                    <p>腰椎间盘突出症（Lumbar Disc Herniation, LDH）是由于腰椎间盘的纤维环破裂，髓核组织从破裂处突出，压迫周围神经结构，引起相应临床症状的情况。根据突出物的位置和方向，腰椎间盘突出可分为以下几种类型：</p>
+                    <ul>
+                        <li>中央型：突出物位于椎管中部，主要压迫马尾神经，可能导致双下肢症状和会阴区麻木</li>
+                        <li>旁中央型：突出物位于椎管内一侧，未超过椎间孔内口，既可能压迫同侧的神经根，又可能影响到脊髓或马尾神经</li>
+                        <li>外侧型（椎间孔型）：突出物位于椎管以外的椎间孔内，主要压迫经过椎间孔的神经根</li>
+                        <li>极外侧型（椎间孔外型）：突出物位于侧前方，即椎间孔外口以外，除了压迫神经根外，还可能对周围血管等结构产生影响</li>
+                        <li>前方突出：突出物位于椎体前方，一般较少见，通常不会压迫神经</li>
+                        <li>椎体内突出：髓核组织突入椎体内，形成许莫氏结节，多为慢性过程，可能与椎间盘退变、应力集中等因素有关</li>
+                    </ul>
+
+                    <h3>发病机制</h3>
+                    <p>腰椎间盘突出症的发生与椎间盘的退变、损伤、遗传等因素密切相关。随着年龄的增长，椎间盘的含水量逐渐减少，纤维环的弹性降低，髓核逐渐向纤维环的薄弱处突出。当纤维环破裂时，髓核组织突出并压迫周围神经结构，引发炎症反应和神经症状。</p>
+
+                    <h3>典型症状</h3>
+                    <ul>
+                        <li>疼痛：疼痛是腰椎间盘突出最常见的症状，其性质多样，可为钝痛、刺痛或烧灼样痛。疼痛通常从腰部或臀部开始，沿坐骨神经或腰神经走行方向向下放射至大腿后侧、小腿外侧甚至足部。咳嗽、打喷嚏、用力排便等增加腹压的动作常使疼痛加剧。</li>
+                        <li>麻木：麻木感通常出现在疼痛区域或其远端，是由于神经受压后感觉功能异常所致。患者可能感觉肢体有蚂蚁爬行感、针刺感或发麻，严重时可能影响手部或足部的精细动作。</li>
+                        <li>肌肉无力：当运动神经纤维受累时，患者可能出现肌肉无力的表现，如抬腿困难、足下垂、握力减退等。长期肌肉无力可能导致肌肉萎缩，影响肢体的正常功能和运动能力。</li>
+                        <li>反射改变：部分患者可能出现腱反射减弱或消失，如跟腱反射、膝腱反射等。</li>
+                    </ul>
+
+                    <h3>诊断方法</h3>
+                    <ul>
+                        <li>病史和体格检查：详细询问患者的症状、发病经过和既往病史，进行系统的神经系统和脊柱检查，包括直腿抬高试验、感觉和运动功能评估等。</li>
+                        <li>影像学检查：X线片可显示腰椎的退变、骨质增生等情况；CT和MRI是诊断腰椎间盘突出的重要手段，可清晰显示椎间盘突出的位置、大小、形态以及神经受压情况。</li>
+                        <li>电生理检查：如神经传导速度测定和肌电图，可评估神经受损程度和定位病变部位。</li>
+                    </ul>
+
+                    <h3>治疗方案</h3>
+                    <h4>保守治疗</h4>
+                    <ul>
+                        <li>休息：急性期应适当卧床休息，减轻椎间盘压力，缓解神经根的压迫和炎症，一般建议休息1-2周，避免长时间站立、坐位或弯腰等活动。</li>
+                        <li>药物治疗：根据患者症状，可选用非甾体抗炎药（如布洛芬、塞来昔布等）缓解疼痛和炎症；肌肉松弛剂（如氯唑沙宗）缓解肌肉痉挛；神经营养药物（如甲钴胺）促进神经修复。</li>
+                        <li>物理治疗：包括热敷、红外线照射、超短波、微波等理疗方法，可改善局部血液循环，减轻炎症和疼痛；牵引治疗可拉开椎间隙，减轻椎间盘突出对神经的压迫，但需在专业医生指导下进行，避免不当牵引加重病情。</li>
+                    </ul>
+                    <h4>物理治疗</h4>
+                    <ul>
+                        <li>按摩推拿：通过专业的按摩手法，放松紧张的肌肉，改善局部血液循环，缓解疼痛和肌肉痉挛，但需注意操作手法和力度，避免加重神经根的损伤。</li>
+                        <li>针灸治疗：针刺特定穴位，调节经络气血，起到止痛、消炎、改善神经功能的作用，对一些患者有较好的辅助治疗效果。</li>
+                        <li>功能锻炼：在疼痛缓解后，指导患者进行适当的腰背肌功能锻炼，如“飞燕式”、“拱桥式”等，增强腰背肌力量，稳定脊柱，预防疾病复发。</li>
+                    </ul>
+                    <h4>手术治疗</h4>
+                    <ul>
+                        <li>椎间盘摘除术：通过手术切除突出的椎间盘组织，解除对神经根或脊髓的压迫，是最传统的手术方法，效果确切，但创伤相对较大。</li>
+                        <li>显微椎间盘摘除术：在显微镜下进行手术，具有切口小、组织损伤少、恢复快等优点，能更精细地操作，减少神经损伤风险。</li>
+                        <li>椎间孔镜技术：经皮穿刺进入椎间孔，在内窥镜下摘除突出的椎间盘组织，是一种微创手术，创伤更小，术后恢复快，但对设备和技术要求较高。</li>
+                        <li>人工椎间盘置换术：适用于某些特定类型的椎间盘突出，尤其是年轻、活动量大的患者，可保留脊柱的生理活动度，减少相邻节段的退变。</li>
+                    </ul>
+
+                    <h3>预防措施</h3>
+                    <p>保持良好的坐姿和站姿，避免长时间久坐或站立。适当进行腰部肌肉锻炼，如瑜伽、游泳等有助于增强腰部肌肉力量，减轻椎间盘压力。在日常生活中，注意搬重物的姿势，避免腰部过度扭转和弯曲。定期进行脊柱健康检查，早期发现和干预潜在问题。</p>
+
+                    <h3>生活方式调整</h3>
+                    <p>对于已经患有腰椎间盘突出的患者，建议在日常生活中进行适当的生活方式调整。例如，选择合适的床垫和枕头，保持腰部的自然曲度；控制体重，减轻腰部负担；避免长时间驾驶或乘坐颠簸的车辆。此外，保持积极乐观的心态，避免过度焦虑和紧张，有助于疾病的康复。</p>
+
+                    <h3>康复训练</h3>
+                    <p>康复训练是腰椎间盘突出治疗的重要组成部分。在急性期，可进行简单的床上活动，如踝泵运动，预防下肢深静脉血栓形成。在缓解期，可逐渐增加腰背肌锻炼、核心肌群训练等，增强脊柱的稳定性。康复训练应在专业康复师的指导下进行，根据患者的具体情况制定个性化的训练方案。</p>
+                `;
+            } else if (diseaseName === '颈椎病') {
+                return `
+                    <h3>疾病概述</h3>
+                    <p>颈椎病（Cervical Spondylosis）是由于颈椎长期劳损、骨质增生，或椎间盘突出、韧带增厚，导致颈椎脊髓、神经根或椎动脉受压，出现一系列功能障碍的临床综合征。根据受压组织不同，颈椎病可分为多种类型，如神经根型、脊髓型、椎动脉型、交感神经型等。</p>
+
+                    <h3>发病机制</h3>
+                    <p>颈椎病的发生与颈椎的退行性改变密切相关。随着年龄的增长，颈椎间盘的水分含量减少，弹性降低，容易发生退变和损伤。椎间盘突出、骨质增生、韧带肥厚等病理变化可导致椎管、椎间孔或椎动脉受压，引起相应的神经或血管症状。长期不良姿势、颈部劳损、外伤等因素可加速颈椎的退变过程。</p>
+
+                    <h3>典型症状</h3>
+                    <ul>
+                        <li>颈部疼痛和僵硬：这是颈椎病最常见的症状，常在早晨起床时或长时间保持一个姿势后加重。疼痛可放射至枕部、肩部、上背部，伴有颈部活动受限。</li>
+                        <li>上肢放射性疼痛和麻木：疼痛和麻木感可沿手臂向下放射至手指，常呈刺痛或烧灼样痛，咳嗽、打喷嚏等动作可加重症状。</li>
+                        <li>手部肌肉无力：患者可能出现握力减退、精细动作困难等表现，如无法系纽扣、写字等。</li>
+                        <li>头晕、头痛：部分患者可能出现头晕、头痛等症状，尤其是在颈部活动时加重，可能与椎动脉受压或颈部肌肉紧张有关。</li>
+                        <li>平衡失调和步态异常：脊髓型颈椎病患者可能出现平衡失调、步态不稳、肢体协调性差等表现，严重时可导致瘫痪。</li>
+                    </ul>
+
+                    <h3>诊断方法</h3>
+                    <ul>
+                        <li>病史和体格检查：详细询问患者的症状、发病经过和既往病史，进行系统的神经系统和颈椎检查，包括颈椎活动度、椎间孔挤压试验、神经牵拉试验等。</li>
+                        <li>影像学检查：X线片可显示颈椎的退变、骨质增生、椎间隙狭窄等情况；CT和MRI是诊断颈椎病的重要手段，可清晰显示椎间盘突出、韧带肥厚、椎管狭窄以及神经受压情况。</li>
+                        <li>电生理检查：如神经传导速度测定和肌电图，可评估神经受损程度和定位病变部位。</li>
+                    </ul>
+
+                    <h3>治疗方案</h3>
+                    <h4>保守治疗</h4>
+                    <ul>
+                        <li>休息：急性期应适当休息，减少颈部活动，缓解症状。可使用颈托固定颈部，但不宜长时间佩戴，以免导致颈部肌肉萎缩。</li>
+                        <li>药物治疗：根据患者症状，可选用非甾体抗炎药（如布洛芬、塞来昔布等）缓解疼痛和炎症；肌肉松弛剂（如氯唑沙宗）缓解肌肉痉挛；神经营养药物（如甲钴胺）促进神经修复。</li>
+                        <li>物理治疗：包括热敷、红外线照射、超短波、微波等理疗方法，可改善局部血液循环，减轻炎症和疼痛；牵引治疗可拉开椎间隙，减轻椎间盘突出对神经的压迫，但需在专业医生指导下进行，避免不当牵引加重病情。</li>
+                    </ul>
+                    <h4>物理治疗</h4>
+                    <ul>
+                        <li>按摩推拿：通过专业的按摩手法，放松紧张的肌肉，改善局部血液循环，缓解疼痛和肌肉痉挛，但需注意操作手法和力度，避免加重神经根的损伤。</li>
+                        <li>针灸治疗：针刺特定穴位，调节经络气血，起到止痛、消炎、改善神经功能的作用，对一些患者有较好的辅助治疗效果。</li>
+                        <li>功能锻炼：在疼痛缓解后，指导患者进行适当的颈部肌肉锻炼，如颈椎保健操、颈部伸展运动等，增强颈部肌肉力量，稳定颈椎，预防疾病复发。</li>
+                    </ul>
+                    <h4>手术治疗</h4>
+                    <ul>
+                        <li>前路减压融合术（ACDF）：通过颈椎前路切除突出的椎间盘、骨赘等压迫物，然后进行椎间植骨融合，恢复颈椎的稳定性，适用于神经根型、脊髓型颈椎病。</li>
+                        <li>后路减压术：通过颈椎后路扩大椎管，解除脊髓和神经根的压迫，适用于多节段脊髓型颈椎病。</li>
+                        <li>人工颈椎间盘置换术：适用于某些特定类型的颈椎间盘突出，尤其是年轻、活动量大的患者，可保留颈椎的生理活动度，减少相邻节段的退变。</li>
+                    </ul>
+
+                    <h3>预防措施</h3>
+                    <p>保持良好的坐姿和睡姿，避免长时间低头或高枕。适当进行颈部肌肉锻炼，如颈部伸展运动、颈椎保健操等，有助于增强颈部肌肉力量，减轻颈椎负担。在日常生活中，注意颈部保暖，避免受寒引起肌肉痉挛。定期进行脊柱健康检查，早期发现和干预潜在问题。</p>
+
+                    <h3>生活方式调整</h3>
+                    <p>对于已经患有颈椎病的患者，建议在日常生活中进行适当的生活方式调整。例如，选择合适的枕头和床垫，保持颈椎的自然曲度；避免长时间使用电子设备；定期进行颈部肌肉的放松和锻炼。此外，保持良好的工作和生活习惯，避免过度劳累和精神压力，有助于疾病的康复。</p>
+
+                    <h3>康复训练</h3>
+                    <p>康复训练是颈椎病治疗的重要组成部分。在急性期，可进行简单的床上活动，如颈部轻微转动、伸展等，预防肌肉萎缩。在缓解期，可逐渐增加颈部肌肉锻炼、核心肌群训练等，增强脊柱的稳定性。康复训练应在专业康复师的指导下进行，根据患者的具体情况制定个性化的训练方案。</p>
+                `;
+            } else if (diseaseName === '脊柱侧弯') {
+                return `
+                    <h3>疾病概述</h3>
+                    <p>脊柱侧弯（Scoliosis）是一种脊柱的异常弯曲，表现为脊柱在冠状面上的侧方弯曲，常伴有脊柱的旋转。根据病因，脊柱侧弯可分为特发性、先天性和神经肌肉性等类型。特发性脊柱侧弯是最常见的类型，占所有病例的80%以上，多发于青少年，尤其是女性。其具体病因尚不明确，可能与遗传、激素、神经肌肉等因素有关。</p>
+
+                    <h3>发病机制</h3>
+                    <p>脊柱侧弯的发生与多种因素相关。特发性脊柱侧弯可能与遗传基因、生长发育过程中的激素变化、神经肌肉平衡失调等有关。先天性脊柱侧弯是由于胚胎发育过程中椎体的形成异常所致，如半椎体、蝴蝶椎等。神经肌肉性脊柱侧弯则与神经肌肉疾病相关，如小儿麻痹症、脊髓灰质炎等导致的肌肉力量不平衡。</p>
+
+                    <h3>典型症状</h3>
+                    <ul>
+                        <li>外观异常：肩部不等高、肩胛骨突出、腰部不对称等，是脊柱侧弯的常见体征。患者站立时，身体可能向一侧倾斜，骨盆可能不水平。</li>
+                        <li>姿势异常：患者可能出现头部倾斜、肩膀不平、骨盆倾斜等姿势异常，严重时可影响整体身体平衡。</li>
+                        <li>疼痛：部分患者可能出现背部疼痛，尤其是在侧弯加重或伴有其他脊柱病变时。</li>
+                        <li>心肺功能受影响：严重侧弯可能压迫心肺，影响心肺功能，导致活动耐力下降、呼吸困难等。</li>
+                        <li>神经受压症状：在某些情况下，脊柱侧弯可能导致神经根或脊髓受压，出现下肢麻木、无力等症状。</li>
+                    </ul>
+
+                    <h3>诊断方法</h3>
+                    <ul>
+                        <li>体格检查：通过 Adam's forward bend test（前屈试验）等方法初步筛查脊柱侧弯，观察患者弯腰时背部的对称性。</li>
+                        <li>影像学检查：X线片是诊断脊柱侧弯的金标准，可测量侧弯的角度（Cobb角）、旋转程度和累及的节段。MRI可用于评估脊髓和神经根的情况，排除其他异常。</li>
+                        <li>其他检查：对于某些特殊类型的脊柱侧弯，可能需要进行遗传学检测、神经电生理检查等。</li>
+                    </ul>
+
+                    <h3>治疗方案</h3>
+                    <h4>观察随访</h4>
+                    <ul>
+                        <li>对于轻度侧弯（Cobb角<10°），定期观察和随访是主要的处理方式，每3-6个月进行一次X线检查，监测侧弯的发展情况。</li>
+                    </ul>
+                    <h4>支具治疗</h4>
+                    <ul>
+                        <li>适用于Cobb角在20°-40°之间的青少年特发性脊柱侧弯，尤其是处于生长发育高峰期的患者。支具需要每天佩戴一定时间，通常为16-23小时，具体时间根据侧弯的严重程度和医生的建议而定。</li>
+                    </ul>
+                    <h4>手术治疗</h4>
+                    <ul>
+                        <li>对于Cobb角>40°且进展明显的患者，可考虑手术矫正。手术方法包括后路脊柱侧弯矫正融合术、前路松解结合后路矫正融合术等，旨在矫正侧弯、恢复脊柱的平衡和稳定性。</li>
+                    </ul>
+                    <h4>物理治疗</h4>
+                    <ul>
+                        <li>包括特定的运动疗法和姿势训练，如Schroth方法、SEAS方法等，通过针对性的肌肉锻炼和姿势矫正，改善脊柱的侧弯程度和身体的对称性。</li>
+                    </ul>
+
+                    <h3>预防措施</h3>
+                    <p>保持良好的坐姿和站姿，避免长时间保持一个姿势。适当进行体育锻炼，增强背部肌肉力量。对于青少年，定期进行脊柱健康检查，早期发现和干预潜在问题。加强健康教育，提高对脊柱侧弯的认识和防范意识。</p>
+
+                    <h3>生活方式调整</h3>
+                    <p>对于已经患有脊柱侧弯的患者，建议在日常生活中注意保持正确的姿势，避免过度负重。选择合适的床垫和座椅，避免长时间坐在柔软的沙发上。定期进行康复训练，增强脊柱的稳定性。避免剧烈运动和重体力劳动，以免加重侧弯程度。</p>
+
+                    <h3>康复训练</h3>
+                    <p>康复训练是脊柱侧弯治疗的重要组成部分。通过针对性的肌肉锻炼和姿势训练，改善脊柱的侧弯程度和身体的对称性。康复训练应在专业康复师的指导下进行，根据患者的具体情况制定个性化的训练方案。</p>
+                `;
+            } else if (diseaseName === '强直性脊柱炎') {
+                return `
+                    <h3>疾病概述</h3>
+                    <p>强直性脊柱炎（Ankylosing Spondylitis, AS）是一种慢性炎症性疾病，主要影响脊柱和骶髂关节，也可累及外周关节和 extraskeletal organs。病因与遗传、免疫等因素有关，多发于年轻男性。未经治疗的患者可能出现脊柱强直和畸形，严重影响生活质量。</p>
+
+                    <h3>发病机制</h3>
+                    <p>强直性脊柱炎的发病机制尚不完全明确，但与遗传、免疫和环境因素密切相关。约90%的患者携带 HLA-B27 基因，该基因与疾病的易感性密切相关。免疫系统异常激活导致炎症介质（如 TNF-α、IL-17 等）水平升高，引发关节和脊柱的慢性炎症，最终可能导致骨化和强直。</p>
+
+                    <h3>典型症状</h3>
+                    <ul>
+                        <li>腰背部疼痛和僵硬：晨起或久坐后加重，活动后缓解，是强直性脊柱炎的标志性症状。</li>
+                        <li>骶髂关节疼痛：常为最早出现的症状，患者可能感到臀部深处的疼痛，伴有压痛。</li>
+                        <li>外周关节受累：约30%-40%的患者可能出现膝关节、踝关节、肩关节等外周关节的炎症，表现为关节肿胀、疼痛和活动受限。</li>
+                        <li>眼部病变：虹膜炎、葡萄膜炎是常见的 extraskeletal 表现，可导致眼红、眼痛、视力模糊等。</li>
+                        <li>心血管系统受累：部分患者可能出现主动脉瓣关闭不全、心传导异常等心血管病变。</li>
+                        <li>脊柱强直和畸形：疾病晚期，脊柱可能出现强直和畸形，导致驼背、活动受限等。</li>
+                    </ul>
+
+                    <h3>诊断方法</h3>
+                    <ul>
+                        <li>病史和体格检查：详细询问患者的症状、家族病史，进行系统的关节和脊柱检查，评估疼痛、僵硬、关节肿胀等情况。</li>
+                        <li>影像学检查：X线片可显示骶髂关节和脊柱的病变，如关节面模糊、骨质侵蚀、椎体方形变等。MRI 可早期发现骶髂关节的炎症病变。</li>
+                        <li>实验室检查：HLA-B27 检测有助于诊断，但并非特异性指标。血沉（ESR）、C反应蛋白（CRP）等炎症指标可反映疾病活动度。</li>
+                    </ul>
+
+                    <h3>治疗方案</h3>
+                    <h4>药物治疗</h4>
+                    <ul>
+                        <li>非甾体抗炎药（NSAIDs）：如布洛芬、塞来昔布等，可有效缓解疼痛和炎症，改善患者的生活质量。</li>
+                        <li>改善病情抗风湿药（DMARDs）：如柳氮磺吡啶、甲氨蝶呤等，适用于对 NSAIDs 反应不佳或病情较重的患者。</li>
+                        <li>生物制剂：如 TNF-α 抑制剂（英夫利西单抗、阿达木单抗等），对中重度强直性脊柱炎患者有显著疗效，可迅速缓解症状、抑制疾病进展。</li>
+                    </ul>
+                    <h4>物理治疗</h4>
+                    <ul>
+                        <li>运动疗法：包括游泳、瑜伽、脊柱伸展运动等，有助于维持关节的活动度和肌肉力量，改善脊柱的灵活性。</li>
+                        <li>理疗：如热敷、红外线照射等，可缓解疼痛和肌肉僵硬。</li>
+                    </ul>
+                    <h4>手术治疗</h4>
+                    <ul>
+                        <li>对于严重关节畸形或脊柱畸形的患者，可考虑关节置换或脊柱矫形手术，恢复关节功能和脊柱的正常姿势。</li>
+                    </ul>
+
+                    <h3>预防措施</h3>
+                    <p>保持良好的姿势和规律的运动，增强脊柱和关节的灵活性。避免过度劳累和感染，积极治疗眼部和心血管系统的并发症。定期进行健康检查，早期发现和干预潜在问题。</p>
+
+                    <h3>生活方式调整</h3>
+                    <p>对于强直性脊柱炎患者，建议在日常生活中保持规律的运动习惯，如游泳、瑜伽等，有助于维持关节的活动度和肌肉力量。注意饮食调节，避免高脂肪、高糖食物，增加富含维生素和矿物质的食物摄入。保持良好的心态，积极面对疾病，避免过度焦虑和压力。</p>
+
+                    <h3>康复训练</h3>
+                    <p>康复训练是强直性脊柱炎治疗的重要组成部分。通过针对性的运动疗法和物理治疗，改善关节的活动度和肌肉力量，减轻疼痛和僵硬。康复训练应在专业康复师的指导下进行，根据患者的具体情况制定个性化的训练方案。</p>
+                `;
+            } else if (diseaseName === '腰椎管狭窄症') {
+                return `
+                    <h3>疾病概述</h3>
+                    <p>腰椎管狭窄症（Lumbar Spinal Stenosis, LSS）是指腰椎椎管、神经根管以及椎间孔等部位狭窄，导致神经受压，引起下肢疼痛、麻木等症状。病因包括退行性改变、先天性发育异常、创伤等。随着人口老龄化加剧，腰椎管狭窄症的发病率逐渐上升，成为影响中老年人生活质量的重要疾病之一。</p>
+
+                    <h3>发病机制</h3>
+                    <p>腰椎管狭窄症的发生与腰椎的退行性改变密切相关。随着年龄的增长，椎间盘退变、椎体边缘骨质增生、黄韧带肥厚、小关节增生内聚等病理变化可导致椎管、椎间孔和侧隐窝狭窄，压迫马尾神经和神经根，引发相应的临床症状。此外，先天性椎管狭窄、腰椎不稳、腰椎滑脱等因素也可导致或加重腰椎管狭窄症。</p>
+
+                    <h3>典型症状</h3>
+                    <ul>
+                        <li>间歇性跛行：行走时下肢疼痛、麻木，休息后缓解，是腰椎管狭窄症的特征性表现。患者行走一定距离后，下肢症状加重，被迫停下休息，再次行走后症状反复出现。</li>
+                        <li>腰背部疼痛：常在活动时加重，休息时缓解，可伴有腰部僵硬感。</li>
+                        <li>下肢麻木和刺痛：可放射至小腿和足部，常伴有针刺样或电击样疼痛。</li>
+                        <li>肌肉无力：严重时可出现足下垂、足趾不能背伸等表现，影响行走和日常生活。</li>
+                        <li>感觉减退：部分患者可能出现下肢感觉减退，如触觉、痛觉、温度觉等异常。</li>
+                    </ul>
+
+                    <h3>诊断方法</h3>
+                    <ul>
+                        <li>病史和体格检查：详细询问患者的症状、发病经过和既往病史，进行系统的神经系统和腰椎检查，包括直腿抬高试验、感觉和运动功能评估等。</li>
+                        <li>影像学检查：X线片可显示腰椎的退变、骨质增生、椎间隙狭窄等情况；CT和MRI是诊断腰椎管狭窄症的重要手段，可清晰显示椎管狭窄的程度、范围以及神经受压情况。</li>
+                        <li>电生理检查：如神经传导速度测定和肌电图，可评估神经受损程度和定位病变部位。</li>
+                    </ul>
+
+                    <h3>治疗方案</h3>
+                    <h4>保守治疗</h4>
+                    <ul>
+                        <li>休息：急性期应适当休息，减轻椎间盘压力，缓解神经根的压迫和炎症，一般建议休息1-2周，避免长时间站立、坐位或弯腰等活动。</li>
+                        <li>药物治疗：根据患者症状，可选用非甾体抗炎药（如布洛芬、塞来昔布等）缓解疼痛和炎症；肌肉松弛剂（如氯唑沙宗）缓解肌肉痉挛；神经营养药物（如甲钴胺）促进神经修复。</li>
+                        <li>物理治疗：包括热敷、红外线照射、超短波、微波等理疗方法，可改善局部血液循环，减轻炎症和疼痛；牵引治疗可拉开椎间隙，减轻椎间盘突出对神经的压迫，但需在专业医生指导下进行，避免不当牵引加重病情。</li>
+                    </ul>
+                    <h4>物理治疗</h4>
+                    <ul>
+                        <li>按摩推拿：通过专业的按摩手法，放松紧张的肌肉，改善局部血液循环，缓解疼痛和肌肉痉挛，但需注意操作手法和力度，避免加重神经根的损伤。</li>
+                        <li>针灸治疗：针刺特定穴位，调节经络气血，起到止痛、消炎、改善神经功能的作用，对一些患者有较好的辅助治疗效果。</li>
+                        <li>功能锻炼：在疼痛缓解后，指导患者进行适当的腰背肌功能锻炼，如“飞燕式”、“拱桥式”等，增强腰背肌力量，稳定脊柱，预防疾病复发。</li>
+                    </ul>
+                    <h4>手术治疗</h4>
+                    <ul>
+                        <li>椎管减压手术：通过切除部分椎板、黄韧带等结构，扩大椎管空间，解除神经受压，是治疗腰椎管狭窄症的常用手术方法。</li>
+                        <li>椎间融合术：在椎管减压的基础上，进行椎间植骨融合，恢复椎间隙高度，稳定脊柱，适用于伴有腰椎不稳或退变性滑脱的患者。</li>
+                        <li>微创手术：如椎间孔镜技术、单侧双通道脊柱内镜技术等，创伤小、恢复快，但对设备和技术要求较高。</li>
+                    </ul>
+
+                    <h3>预防措施</h3>
+                    <p>保持良好的腰椎姿势，避免长时间弯腰和负重。适当进行腰背肌锻炼，增强腰椎的稳定性。控制体重，减轻腰椎负担。定期进行脊柱健康检查，早期发现和干预潜在问题。</p>
+
+                    <h3>生活方式调整</h3>
+                    <p>对于腰椎管狭窄症患者，建议在日常生活中避免长时间站立或行走，适当使用辅助器具如腰围。选择合适的床垫和枕头，保持腰椎的自然曲度。定期进行康复训练，增强腰部肌肉力量。保持积极乐观的心态，避免过度焦虑和紧张，有助于疾病的康复。</p>
+
+                    <h3>康复训练</h3>
+                    <p>康复训练是腰椎管狭窄症治疗的重要组成部分。在急性期，可进行简单的床上活动，如踝泵运动，预防下肢深静脉血栓形成。在缓解期，可逐渐增加腰背肌锻炼、核心肌群训练等，增强脊柱的稳定性。康复训练应在专业康复师的指导下进行，根据患者的具体情况制定个性化的训练方案。</p>
+                `;
+            } else if (diseaseName === '胸椎间盘突出') {
+                return `
+                    <h3>疾病概述</h3>
+                    <p>胸椎间盘突出（Thoracic Disc Herniation, TDH）是指胸椎间盘的纤维环破裂，髓核组织突出，压迫脊髓或神经根，引起相应症状。由于胸椎的稳定性较高，胸椎间盘突出相对较少见，但一旦发生，症状可能较为严重，尤其当突出的椎间盘压迫脊髓时，可能导致严重的神经功能障碍。</p>
+
+                    <h3>发病机制</h3>
+                    <p>胸椎间盘突出的发生与胸椎的解剖结构和生理特点有关。胸椎与肋骨相连，活动度相对较小，因此在日常生活中较少受到损伤。然而，当受到外力冲击、长期不良姿势、过度扭转或屈伸等情况下，胸椎间盘可能受损，纤维环破裂，髓核组织突出。此外，胸椎间盘的退行性改变也是重要的发病因素。</p>
+
+                    <h3>典型症状</h3>
+                    <ul>
+                        <li>胸部或腹部的放射性疼痛：疼痛常沿肋间神经或腹壁神经分布，呈刺痛、烧灼样痛或电击样痛，常被误认为是心血管或消化系统疾病。</li>
+                        <li>下肢麻木和无力：当突出的椎间盘压迫脊髓时，可能出现下肢麻木、无力，严重时可影响行走，表现为步态不稳、踩棉花感等。</li>
+                        <li>大小便功能障碍：提示脊髓受压严重，可能出现排尿困难、尿失禁、便秘或大便失禁等。</li>
+                        <li>感觉减退：部分患者可能出现胸腹部或下肢感觉减退，如触觉、痛觉、温度觉等异常。</li>
+                    </ul>
+
+                    <h3>诊断方法</h3>
+                    <ul>
+                        <li>病史和体格检查：详细询问患者的症状、发病经过和既往病史，进行系统的神经系统和胸椎检查，包括感觉、运动、反射等评估。</li>
+                        <li>影像学检查：MRI是诊断胸椎间盘突出的首选检查方法，可清晰显示椎间盘突出的位置、大小、形态以及脊髓和神经受压情况。CT扫描也可用于评估骨性结构的改变。</li>
+                        <li>电生理检查：如神经传导速度测定和肌电图，可评估神经受损程度和定位病变部位。</li>
+                    </ul>
+
+                    <h3>治疗方案</h3>
+                    <h4>保守治疗</h4>
+                    <ul>
+                        <li>休息：急性期应适当休息，减轻椎间盘压力，缓解神经根的压迫和炎症，一般建议休息1-2周，避免长时间站立、坐位或弯腰等活动。</li>
+                        <li>药物治疗：根据患者症状，可选用非甾体抗炎药（如布洛芬、塞来昔布等）缓解疼痛和炎症；肌肉松弛剂（如氯唑沙宗）缓解肌肉痉挛；神经营养药物（如甲钴胺）促进神经修复。</li>
+                        <li>物理治疗：包括热敷、红外线照射、超短波、微波等理疗方法，可改善局部血液循环，减轻炎症和疼痛；牵引治疗可拉开椎间隙，减轻椎间盘突出对神经的压迫，但需在专业医生指导下进行，避免不当牵引加重病情。</li>
+                    </ul>
+                    <h4>物理治疗</h4>
+                    <ul>
+                        <li>按摩推拿：通过专业的按摩手法，放松紧张的肌肉，改善局部血液循环，缓解疼痛和肌肉痉挛，但需注意操作手法和力度，避免加重神经根的损伤。</li>
+                        <li>针灸治疗：针刺特定穴位，调节经络气血，起到止痛、消炎、改善神经功能的作用，对一些患者有较好的辅助治疗效果。</li>
+                        <li>功能锻炼：在疼痛缓解后，指导患者进行适当的背部肌肉锻炼，如超人式、平板支撑等，增强背部肌肉力量，稳定胸椎，预防疾病复发。</li>
+                    </ul>
+                    <h4>手术治疗</h4>
+                    <ul>
+                        <li>前路减压融合术：通过胸椎前路切除突出的椎间盘，然后进行椎间植骨融合，恢复胸椎的稳定性，适用于大多数胸椎间盘突出患者。</li>
+                        <li>后路减压术：通过胸椎后路切除部分椎板和黄韧带，解除脊髓和神经根的压迫，适用于伴有后方骨性结构压迫的患者。</li>
+                        <li>微创手术：如胸腔镜辅助下的椎间盘切除术，创伤小、恢复快，但对设备和技术要求较高。</li>
+                    </ul>
+
+                    <h3>预防措施</h3>
+                    <p>保持良好的坐姿和站姿，避免长时间弯腰和扭转胸部。适当进行背部肌肉锻炼，增强胸椎的稳定性。避免突然的剧烈运动和外伤。定期进行脊柱健康检查，早期发现和干预潜在问题。</p>
+
+                    <h3>生活方式调整</h3>
+                    <p>对于胸椎间盘突出患者，建议在日常生活中注意保持正确的姿势，尤其是在工作和运动中。选择合适的床垫和枕头，避免过高或过低。定期进行康复训练，增强背部肌肉力量。保持积极乐观的心态，避免过度焦虑和紧张，有助于疾病的康复。</p>
+
+                    <h3>康复训练</h3>
+                    <p>康复训练是胸椎间盘突出治疗的重要组成部分。在急性期，可进行简单的床上活动，如踝泵运动，预防下肢深静脉血栓形成。在缓解期，可逐渐增加背部肌肉锻炼、核心肌群训练等，增强脊柱的稳定性。康复训练应在专业康复师的指导下进行，根据患者的具体情况制定个性化的训练方案。</p>
+                `;
+            } else {
+                return `<p>暂无详细内容</p>`;
+            }
+        }
+
+        function scrollToDisease(searchText) {
+            const cards = document.querySelectorAll('.disease-card');
+            let found = false;
+
+            cards.forEach(card => {
+                const diseaseName = card.querySelector('h2').textContent.toLowerCase();
+                if (diseaseName.includes(searchText.toLowerCase())) {
+                    found = true;
+                    card.classList.add('highlight');
+                    setTimeout(() => card.classList.remove('highlight'), 1500);
+
+                    // 对所有卡片使用 scrollIntoView
+                    card.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+
+            if (!found) {
+                alert('未找到相关疾病，请尝试其他关键词。');
+            }
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+
+        // 点击搜索按钮触发搜索
+        searchButton.addEventListener('click', function() {
+            const searchText = searchInput.value.trim();
+            if (searchText) {
+                scrollToDisease(searchText);
+            }
+        });
+
+        // 按下回车键触发搜索
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                const searchText = searchInput.value.trim();
+                if (searchText) {
+                    scrollToDisease(searchText);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

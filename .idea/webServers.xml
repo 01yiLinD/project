@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f27420d0-4db8-4d66-baaa-cd7819b8e5c9" name="spinetr">
+        <fileTransfer accessType="SFTP" host="172.22.9.201" port="22" sshConfigId="dfd88478-97e8-4582-9d56-659ce3cdccf5" sshConfig="huangr@172.22.9.201:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="f6955ffb-ef6e-4bc8-8a0f-3eccdc7fb71d" name="786">
+        <fileTransfer rootFolder="/root" accessType="SFTP" host="connect.westc.gpuhub.com" port="42811" sshConfigId="96fbb9f3-d702-4f6c-8193-dd4516f6056d" sshConfig="786">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="fce7a307-6116-4039-bb59-ffdbe9eb896f" name="683">
+        <fileTransfer accessType="SFTP" host="connect.westb.seetacloud.com" port="17806" sshConfigId="dfb308b9-eda5-41a0-82a0-9d90b8bf1232" sshConfig="683">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

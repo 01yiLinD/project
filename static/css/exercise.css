@@ -1,0 +1,351 @@
+/* 基础样式 */
+#nav {
+    position: relative;
+    border: none;
+    border-radius: 10cm;
+    display: flex;
+    list-style: none;
+    background: linear-gradient(135deg, #303C56, #9bcbd7);  /* 渐变背景 */
+    box-shadow: 5px 5px 5px #00000033;
+    padding: 10px;
+}
+
+#nav li a {
+    position: relative;
+    padding: 10px 40px;
+    font: 500 16px '优设标题黑';
+    border: none;
+    outline: none;
+    color: #fef6da;
+    display: inline-block;
+    font-weight: bold;
+    text-decoration: none;
+    z-index: 3;
+}
+
+.slide2 {
+    position: absolute;
+    display: inline-block;
+    height: 40px;
+    border-radius: 10cm;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1.05);
+}
+
+.slide2 {
+    opacity: 0;
+    background-color: #f2c866;
+    z-index: 1;
+    box-shadow: 0 0 20px #e4ad46 inset;
+}
+
+.squeeze {
+    transform: scale(0.9);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    #nav li a {
+        padding: 10px 10px;
+        font-size: 14px;
+    }
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    color: #394034;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background: linear-gradient(135deg, #303C56, #9bcbd7); /* 渐变背景 */
+    margin-top: 0px; /* 调整这个值来增加或减少距离 */
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    color: #fef6da;
+    font-size: 2.5em;
+    margin: 0;
+}
+
+/* 搜索框 */
+.search-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+    position: relative;
+}
+
+.search-box {
+    width: 100%;
+    padding: 12px 20px;
+    border: 2px solid #4A5D7F;
+    border-radius: 30px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+    
+    background-size: 20px;
+}
+
+.search-box:focus {
+    border-color: #2c3e50;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.search-button {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0px;
+}
+
+.search-button svg {
+    width: 24px;
+    height: 24px;
+    fill: #f2c866;
+}
+
+
+.highlight {
+    animation: highlight 1.5s ease;
+}
+
+@keyframes highlight {
+    0% { background-color: rgba(255,235,59,0.3); }
+    100% { background-color: transparent; }
+}
+
+/* 视频展示区 */
+.video-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 默认两列 */
+    gap: 40px; /* 调整卡片间距 */
+    padding: 0 30px; /* 默认左右 padding */
+    padding-bottom: 40px;
+}
+
+.video-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    size: 80%; /* 占父容器的80% */
+    will-change: transform; /* 添加此属性优化动画性能 */
+}
+.video-card_details a {
+    color: #f2c866;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+}
+
+.video-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.video-card_details {
+    padding: 10px;
+    text-align: center;
+}
+
+.video-card h3 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: #394034;
+}
+
+.video-card p {
+    color: #666;
+}
+
+/* 搜索栏响应式优化 */
+.search-container {
+    position: relative;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.search-box {
+    /* 新增右侧留白防止文字遮挡按钮 */
+    padding-right: 60px !important; 
+}
+
+.search-button {
+    /* 确保按钮始终可见 */
+    right: 25px;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+
+@media (max-width: 888px) {
+    .search-container {
+        padding: 0 10px;
+    }
+    
+    .search-box {
+        padding: 10px 50px 10px 15px !important;
+        font-size: 14px;
+    }
+    
+    .search-button {
+        right: 15px;
+        padding: 6px;
+        /* 增加触摸区域 */
+        min-width: 36px;
+        min-height: 36px;
+    }
+    
+    .search-button svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .video-container {
+        grid-template-columns: 1fr; /* 小屏幕单列 */
+        padding: 0 15px; /* 减小左右 padding */
+    }
+    .search-container {
+        width: 100%; /* 搜索结果中提到在小屏幕上搜索框应填满整个宽度 */
+    }
+    .search-box {
+        width: 100%; /* 在小屏幕上搜索框占满宽度 */
+        padding: 12px 0; /* 调整内边距 */
+    }
+    .search-button {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+@media (min-width: 769px) and (max-width: 1200px) {
+    .video-container {
+        padding: 0 50px; /* 中等屏幕调整 padding */
+    }
+}
+
+@media (min-width: 1201px) {
+    .video-container {
+        padding: 0 300px; /* 大屏幕保持原 padding */
+    }
+}
+
+/* 按钮样式 */
+.clock-in-btn {
+    margin: 20px auto; /* 增加顶部边距，让按钮离上面内容更远 */
+    display: block;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 2em;
+    padding: 0.75em 1em;
+    color: #323f59;
+    border: 0.15em solid #323e58;
+    border-radius: 2em;
+    transition: 4s;
+}
+
+.clock-in-btn:before,
+.clock-in-btn:after {
+    content: "";
+    position: absolute;
+    top: -1.5em;
+    z-index: -1;
+    width: 200%;
+    aspect-ratio: 1;
+    border: none;
+    border-radius: 40%;
+    background-color: #96bdce;
+    transition: 4s;
+}
+
+.clock-in-btn:before {
+    left: -80%;
+    transform: translate3d(0, 5em, 0) rotate(-340deg);
+}
+
+.clock-in-btn:after {
+    right: -80%;
+    transform: translate3d(0, 5em, 0) rotate(390deg);
+}
+
+.clock-in-btn:hover,
+.clock-in-btn:focus {
+    color: white;
+}
+
+.clock-in-btn:hover:before,
+.clock-in-btn:hover:after,
+.clock-in-btn:focus:before,
+.clock-in-btn:focus:after {
+    transform: none;
+    background-color: #a6e1e7;
+}
+
+/* 弹窗 */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.popup button {
+    margin-top: 20px;
+    padding: 8px 15px;
+    background: #4A5D7F;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* 弹窗图片样式 */
+.popup img {
+    width: 200px;
+    height: 200px;
+    margin: 15px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.popup button:hover {
+    background: #303C56;
+}

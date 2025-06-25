@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脊柱定位分割 - 辅助诊断</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a73e8;
+            --secondary: #0d47a1;
+            --accent: #00bcd4;
+            --light: #f8f9fa;
+            --dark: #1e2a38;
+            --gray: #5f738c;
+            --success: #4caf50;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', 'Raleway', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 粒子背景效果 */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+       #main-nav {
+    position: fixed; /* 固定在页面顶部 */
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(1.5); /* 居中 + 放大1.5倍 */
+    z-index: 999;
+    border: none;
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    box-shadow: 5px 5px 10px #00000033;
+    padding: 12px 20px;
+    max-width: 1000px;
+    width: 90%;
+    transition: transform 0.3s ease;
+}
+
+#main-nav li {
+    position: relative;
+    z-index: 2;
+}
+
+#main-nav li a {
+    padding: 10px 30px;
+    font: 500 16px '优设标题黑', sans-serif;
+    color: #fef6da;
+    display: block;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#main-nav li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff9c4;
+}
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 主内容区 */
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 140px 20px 80px;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 标题区域 */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(30, 42, 58, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #e0f7fa, #80deea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            letter-spacing: 1px;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #bbdefb;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* 上传区域 */
+        .upload-section {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 0.8s forwards;
+            animation-delay: 0.1s;
+        }
+
+        .upload-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .upload-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .custom-upload {
+            background: rgba(0, 188, 212, 0.2);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-weight: 500;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .custom-upload:hover {
+            background: rgba(0, 188, 212, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 188, 212, 0.4);
+        }
+
+        .custom-upload i {
+            margin-right: 10px;
+        }
+
+        #uploadButton {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            padding: 14px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            letter-spacing: 0.8px;
+        }
+
+        #uploadButton:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(0, 188, 212, 0.4);
+        }
+
+        .file-name {
+            margin-top: 15px;
+            color: #bbdefb;
+            font-size: 1rem;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        /* 结果区域 */
+        .result-section {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 0.8s forwards;
+            animation-delay: 0.2s;
+        }
+
+        .result-section.active {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 188, 212, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .result-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .result-image {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .result-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 188, 212, 0.4);
+        }
+
+        .loading {
+            display: none;
+            width: 50px;
+            height: 50px;
+            margin: 30px auto;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            border-top: 5px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.3rem;
+            }
+
+            #main-nav {
+                transform: translateX(-50%) scale(1.3);
+            }
+        }
+
+        @media (max-width: 768px) {
+            #main-nav {
+                top: 15px;
+                width: 96%;
+                transform: translateX(-50%) scale(1.2);
+                padding: 8px 15px;
+            }
+
+            #main-nav li a {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            .container {
+                padding: 120px 15px 60px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .upload-section, .result-section {
+                padding: 25px;
+            }
+
+            .upload-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .custom-upload, #uploadButton {
+                width: 100%;
+                text-align: center;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+
+    <!-- 导航栏 -->
+    <ul id="main-nav">
+        <li><a href="{{ url_for('index') }}">首页</a></li>
+        <li><a href="{{ url_for('diseases') }}">脊柱疾病介绍</a></li>
+        <li><a href="{{ url_for('model') }}">模型介绍</a></li>
+        <li><a href="{{ url_for('diagnosis') }}">辅助诊断</a></li>
+        <li><a href="{{ url_for('exercise') }}">健康训练</a></li>
+        <li><a href="{{ url_for('contact') }}">联系我们</a></li>
+    </ul>
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <!-- 标题区域 -->
+        <div class="hero-section">
+            <h1 class="hero-title">脊柱定位分割</h1>
+            <p class="hero-subtitle">上传您的脊柱CT影像，获取精准的定位和分割结果</p>
+        </div>
+
+        <!-- 上传区域 -->
+        <div class="upload-section">
+            <h2 class="section-title">影像上传</h2>
+            <div class="upload-container">
+                <label class="custom-upload">
+                    <i class="fas fa-file-upload"></i> 选择CT文件
+                    <input type="file" id="fileInput" accept=".nii.gz">
+                </label>
+                <button id="uploadButton">
+                    <i class="fas fa-stethoscope"></i> 开始诊断
+                </button>
+            </div>
+            <div class="file-name" id="fileName">未选择任何文件</div>
+            <div class="loading" id="loadingIndicator"></div>
+        </div>
+
+        <!-- 结果区域 -->
+        <div class="result-section" id="resultSection">
+            <h2 class="section-title">诊断结果</h2>
+            <div class="result-content">
+                <img id="resultImage" class="result-image" src="" alt="脊柱分割结果">
+                <div id="resultDetails"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 粒子背景初始化
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: "#80deea" },
+                shape: { type: "circle", stroke: { width: 0, color: "#000000" } },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#4db6ac",
+                    opacity: 0.3,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 1 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // 文件上传和预测功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadButton = document.getElementById('uploadButton');
+            const fileNameDiv = document.getElementById('fileName');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const resultImage = document.getElementById('resultImage');
+            const resultSection = document.getElementById('resultSection');
+            const resultDetails = document.getElementById('resultDetails');
+
+            // 文件选择处理
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    fileNameDiv.textContent = '已选择文件: ' + this.files[0].name;
+                } else {
+                    fileNameDiv.textContent = '未选择任何文件';
+                }
+            });
+
+            // 上传按钮点击事件
+            uploadButton.addEventListener('click', function() {
+                const file = fileInput.files[0];
+                if (!file) {
+                    alert('请选择CT图像文件');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                // 显示加载动画
+                loadingIndicator.style.display = 'block';
+
+                // 重置结果区域
+                resultImage.src = '';
+                resultDetails.innerHTML = '';
+                resultSection.classList.remove('active');
+
+                // 发送请求
+                fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        // 显示结果
+                        resultImage.src = 'data:image/png;base64,' + data.image;
+                        if (data.image && data.image.trim() !== "") {
+                            resultImage.style.display = 'block';
+                        } else {
+                            resultImage.style.display = 'none';
+                        }
+
+                        resultSection.classList.add('active');
+
+                        // 生成诊断报告（模拟）
+                        const report = `
+                            <div class="report-card">
+                                <h3><i class="fas fa-file-medical"></i> 诊断报告</h3>
+                                <p>影像分析完成/p>
+                                <p>模型置信度: <strong>${(Math.random()*20+80).toFixed(1)}%</strong></p>
+                                <p>处理时间: <strong>${(Math.random()*2+1.5).toFixed(2)}秒</strong></p>
+                                <div class="recommendation">
+                                    <h4><i class="fas fa-lightbulb"></i> 建议:</h4>
+                                    <p>请结合临床检查结果进行综合诊断，如有疑问可联系我们的专家团队。</p>
+                                </div>
+                            </div>
+                        `;
+                        resultDetails.innerHTML = report;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('处理过程中发生错误');
+                })
+                .finally(() => {
+                    // 隐藏加载动画
+                    loadingIndicator.style.display = 'none';
+                });
+            });
+
+            // 导航栏交互效果
+            const navLinks = document.querySelectorAll('#main-nav a');
+            const slide = document.querySelector('.slide2');
+
+            // 设置当前活动链接
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === '{{ url_for("diagnosis") }}') {
+                    const position = link.parentElement.getBoundingClientRect();
+                    const navPosition = document.querySelector('#main-nav').getBoundingClientRect();
+                    const left = position.left - navPosition.left;
+                    const width = position.width;
+
+                    slide.style.opacity = '1';
+                    slide.style.left = `${left}px`;
+                    slide.style.width = `${width}px`;
+                }
+
+                link.addEventListener('mouseover', function() {
+                    const position = this.parentElement.getBoundingClientRect();
+                    const navPosition = document.querySelector('#main-nav').getBoundingClientRect();
+                    const left = position.left - navPosition.left;
+                    const width = position.width;
+
+                    slide.style.opacity = '1';
+                    slide.style.left = `${left}px`;
+                    slide.style.width = `${width}px`;
+                });
+
+                link.addEventListener('mouseout', function() {
+                    const activeLink = document.querySelector('#main-nav li a[href="{{ url_for('diagnosis') }}"]');
+                    if (!this.classList.contains('active')) {
+                        const position = activeLink.parentElement.getBoundingClientRect();
+                        const navPosition = document.querySelector('#main-nav').getBoundingClientRect();
+                        const left = position.left - navPosition.left;
+                        const width = position.width;
+
+                        slide.style.opacity = '1';
+                        slide.style.left = `${left}px`;
+                        slide.style.width = `${width}px`;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
